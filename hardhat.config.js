@@ -1,5 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
+require("@nomiclabs/hardhat-etherscan");
+const config = require("./config.js");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -28,10 +30,20 @@ module.exports = {
     },
   },
   networks: {
-    // rinkeby: {
-    //   url: ``, // Add your deployment URL. Remember to use and refer to .env
-    //   accounts: [``], // Add your private key. Remember to use and refer to .env
-    // },
+    hardhat: {
+      chainId: 1337,
+    },
+    rinkeby: {
+      url: config.rinkebyURL,
+      accounts: [config.accountPrivateKey],
+    },
+    polygon: {
+      url: config.polygonURL,
+      accounts: [config.polygonPrivateKey],
+    },
+  },
+  etherscan: {
+    apiKey: config.etherscanApiKey,
   },
   gasReporter: {
     currency: "USD",

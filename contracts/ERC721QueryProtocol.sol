@@ -29,6 +29,8 @@ interface IERC721 {
 }
 
 contract ERC721QueryProtocol {
+  constructor() {}
+
   /**
    * @dev Returns an array of token IDs owned by `owner`.
    *
@@ -40,7 +42,6 @@ contract ERC721QueryProtocol {
    * an out-of-gas error (10K pfp collections should be fine).
    *
    * Modified from ERC721AQueryable
-   */
    */
   function tokensOfOwner(address contractAddress, address owner)
     external
