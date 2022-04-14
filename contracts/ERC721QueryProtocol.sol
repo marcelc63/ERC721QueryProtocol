@@ -18,7 +18,7 @@ pragma solidity ^0.8.12;
 
 error TokenIndexOutOfBounds();
 error InvalidQueryRange();
-error InvalidTotalSupply();
+error TotalSupplyNotFound();
 
 interface IERC721 {
   function totalSupply() external view returns (uint256);
@@ -54,7 +54,7 @@ contract ERC721QueryProtocol {
 
       // Index starts at 0. Try/catch will skip over index 0 for contracts starting with index 1.
       for (uint256 i = 0; tokenIdsIdx != tokenIdsLength; ++i) {
-        // Try get token owner. Skip loop if token doesn't exist.
+        // Try get token owner. Skip if token doesn't exist.
         try IERC721(contractAddress).ownerOf(i) returns (address tokenOwner) {
           if (tokenOwner == owner) {
             tokenIds[tokenIdsIdx++] = i;
@@ -124,7 +124,7 @@ contract ERC721QueryProtocol {
           i != stop && tokenIdsIdx != tokenIdsMaxLength;
           ++i
         ) {
-          // Try get token owner. Skip loop if token doesn't exist.
+          // Try get token owner. Skip if token doesn't exist.
           try IERC721(contractAddress).ownerOf(i) returns (address tokenOwner) {
             if (tokenOwner == owner) {
               tokenIds[tokenIdsIdx++] = i;
@@ -139,7 +139,7 @@ contract ERC721QueryProtocol {
         }
         return tokenIds;
       } catch {
-        revert InvalidTotalSupply();
+        revert TotalSupplyNotFound();
       }
     }
   }
